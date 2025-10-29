@@ -13,7 +13,6 @@ const REQUEST_MAPPING = `/api/v1/auth`;
  *
  * @param email - The email of the user.
  * @param password - The password of the user.
- * @return true if the login was successful, false otherwise.
  * @throws An error if the request fails or if the response cannot be parsed.
  * @author Nicolás Sabogal
  */
@@ -27,6 +26,26 @@ export async function login(email: string, password: string): Promise<void> {
     });
 
     localStorage.setItem("authToken", response.token);
+}
+
+/**
+ * Create a new user with the given email, password, and name.
+ * 
+ * @param email - The email of the new user.
+ * @param password - The password of the user.
+ * @param name - The name of the user.
+ * @returns Id, email, and name of the created user.
+ * @throws An error if the request fails or if the response cannot be parsed.
+ * @author Nicolás Sabogal
+ */
+export async function register(email: string, password: string, name: string): Promise<any> {
+    const REQUEST_URL = `${REQUEST_MAPPING}/register`;
+    return await userMgmtRequest({
+        requestName: "register",
+        endpoint: REQUEST_URL,
+        method: "POST",
+        body: { email, password, name }
+    });
 }
 
 /**

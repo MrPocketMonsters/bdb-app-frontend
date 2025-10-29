@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ListEntryCard from '@/components/ListEntryCard';
+import { NAVIGATION_PATHS } from '@/constants/navigation';
 
 const modules = [
   {
@@ -61,13 +62,13 @@ const Home: React.FC = () => {
 
           <div className="flex gap-3">
             <Link
-              to="/register"
+              to={NAVIGATION_PATHS.REGISTER_PATH}
               className="px-5 py-3 rounded-md bg-gradient-to-r from-purple-500 to-blue-500 font-medium shadow-md"
             >
               Únete ahora
             </Link>
             <Link
-              to="/login"
+              to={NAVIGATION_PATHS.LOGIN_PATH}
               className="px-5 py-3 rounded-md border border-white/20 text-white/90 hover:bg-white/5 flex items-center"
             >
               ¿Tienes una cuenta?

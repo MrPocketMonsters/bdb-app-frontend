@@ -1,8 +1,9 @@
 import React, { useState , useEffect } from "react";
 import { Link } from "react-router-dom";
-import { isLoggedIn } from '../services/authService';
+import { isLoggedIn } from '../../services/authService';
 import { login } from "@/services/authService";
 import RedirectTimer from "@/components/RedirectTimer";
+import { NAVIGATION_PATHS } from "@/constants/navigation";
 
 const Login: React.FC = () => {
   const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
@@ -33,7 +34,7 @@ const Login: React.FC = () => {
 
   // Show redirect message if already logged in
   if (isAlreadyLoggedIn) {
-    return <RedirectTimer message="Ya has iniciado sesión. Serás redirigido en" redirectTo="/" />;
+    return <RedirectTimer message="Ya has iniciado sesión. Serás redirigido en" redirectTo={NAVIGATION_PATHS.HOME_PATH} />;
   }
 
   return (

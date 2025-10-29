@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { logout } from '../services/authService';
+import { logout } from '../../services/authService';
 import RedirectTimer from "@/components/RedirectTimer";
+import { NAVIGATION_PATHS } from "@/constants/navigation";
 
 const Logout: React.FC = () => {
   // perform logout once on mount
@@ -13,7 +14,7 @@ const Logout: React.FC = () => {
     }
   }, []);
 
-  return <RedirectTimer message="Has cerrado sesión correctamente. Serás redirigido en" redirectTo="/" />;
+  return <RedirectTimer message="Has cerrado sesión correctamente. Serás redirigido en" redirectTo={NAVIGATION_PATHS.HOME_PATH} />;
 };
 
 export default Logout;
