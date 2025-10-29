@@ -17,7 +17,7 @@ const REQUEST_MAPPING = `/api/v1/auth`;
  * @throws An error if the request fails or if the response cannot be parsed.
  * @author Nicolás Sabogal
  */
-export async function login(email: string, password: string): Promise<boolean> {
+export async function login(email: string, password: string): Promise<void> {
     const REQUEST_URL = `${REQUEST_MAPPING}/login`;
     const response = await userMgmtRequest({
         requestName: "login",
@@ -26,11 +26,7 @@ export async function login(email: string, password: string): Promise<boolean> {
         body: { email, password }
     });
 
-    if (response.token) {
-        localStorage.setItem("authToken", response.token);
-        return true;
-    }
-    return false;
+    localStorage.setItem("authToken", response.token);
 }
 
 /**
