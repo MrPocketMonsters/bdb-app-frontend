@@ -22,11 +22,8 @@ const Login: React.FC = () => {
     const loginData = { email, password };
 
     try {
-      login(email, password);
-
-      // Redirect to home page
-      if (isLoggedIn())
-        navigate("/");
+      await login(email, password);
+      navigate('/');
     } catch (error: any) {
       setError(`Error: ${error.message}`);
       console.error("Error de solicitud:", error);

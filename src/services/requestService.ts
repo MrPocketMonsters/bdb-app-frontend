@@ -88,8 +88,8 @@ async function request(
 
     // If the response is not ok, throw an error.
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Error in request ${options.requestName}: (${response.status})${response.statusText} ${errorText}`);
+        const error = await response.json();
+        throw new Error(`Error in request ${options.requestName}: (${response.status})${response.statusText} ${error.message}`);
     }
 
     // Check if response is JSON
