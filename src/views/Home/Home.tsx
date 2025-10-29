@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ListEntryCard from '@/components/ListEntryCard';
 
 const modules = [
   {
@@ -121,40 +122,19 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <section id="modules" className="space-y-12">
+        <section id="modules" className="space-y-5">
           {modules.map((m) => (
-            <article
-              id={m.id}
+            <ListEntryCard
               key={m.id}
-              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 grid md:grid-cols-3 gap-6 items-center"
-            >
-              <div className="md:col-span-1">
-                <img
-                  src={m.image}
-                  alt={m.title}
-                  loading="lazy"
-                  className="w-full h-48 md:h-40 object-cover rounded-md border border-white/5 shadow-sm"
-                />
-              </div>
-              <div className="md:col-span-2">
-                <h3 className="text-2xl font-semibold mb-3">{m.title}</h3>
-                <p className="text-white/90 mb-4 leading-relaxed">{m.description}</p>
-                <div className="flex items-center gap-3">
-                  <a href={`#${m.id}`} className="text-sm text-white/80 underline">
-                    Ver módulo
-                  </a>
-                  <button
-                    onClick={() => {
-                      // scroll to module anchor
-                      window.location.hash = `#${m.id}`;
-                    }}
-                    className="px-4 py-2 rounded-md bg-gradient-to-r from-purple-500 to-blue-500 text-white font-medium"
-                  >
-                    Ver módulo
-                  </button>
-                </div>
-              </div>
-            </article>
+              id={m.id}
+              title={m.title}
+              image={m.image}
+              description={m.description}
+              onClick={(id) => {
+                // scroll to module anchor
+                window.location.hash = `#${id}`;
+              }}
+            />
           ))}
         </section>
       </section>
