@@ -21,6 +21,11 @@ export interface UserHistoryEntry {
   completedAt: Date
 }
 
+/**
+ * User recognition entry interface.
+ * 
+ * @author Nicolás Sabogal
+ */
 export interface UserRecognitionEntry {
     id: number,
     courseId: number,
