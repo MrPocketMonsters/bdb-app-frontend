@@ -89,7 +89,7 @@ const Login: React.FC = () => {
           <div className="text-center text-sm text-white/80">
             <p>
               ¿No tienes cuenta?{" "}
-              <Link to="/register" className="text-blue-200 underline">
+              <Link to={NAVIGATION_PATHS.REGISTER_PATH} className="text-blue-200 underline">
                 Regístrate aquí
               </Link>
             </p>
