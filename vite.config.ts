@@ -17,18 +17,6 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    // Enable polling and explicit HMR options to make live reload work reliably
-    // when running inside Docker on Windows (bind mounts). Polling avoids
-    // missed file change events and HMR host ensures the browser can connect
-    // back to the dev server's websocket.
-    watch: {
-      usePolling: true,
-    },
-    hmr: {
-      protocol: 'ws',
-      host: 'localhost',
-      port: 5173,
-    },
   },
   resolve: {
     alias: {

@@ -31,7 +31,7 @@ npm install
 npm run dev
 ```
 
-Al ejecutar `npm run dev` Vite arrancará un servidor local (por defecto en http://localhost:5173) con HMR (Hot Module Replacement). Esto significa que cuando edites componentes, estilos o la mayoría de archivos del proyecto, los cambios se aplicarán en caliente sin recargar toda la página.
+Al ejecutar `npm run dev` Vite arrancará un servidor local (por defecto en http://localhost:5173). Esto significa que cuando edites componentes, estilos o la mayoría de archivos del proyecto, los cambios se aplicarán en caliente sin recargar toda la página.
 
 Si necesitas compilar para producción:
 
@@ -51,7 +51,7 @@ docker run --name bdb-frontend -p 5173:5173 --mount type=bind,source="$(pwd)"/sr
 ```
 
 Notas sobre el comando Docker:
-- El montaje `--mount type=bind,source="$(pwd)"/src,target=/app/src` permite editar el código en tu máquina y que el contenedor vea los cambios — combinado con Vite esto habilita HMR mientras desarrollas dentro del contenedor.
+- El montaje `--mount type=bind,source="$(pwd)"/src,target=/app/src` permite editar el código en tu máquina y que el contenedor vea los cambios, sin embargo no hará cambios en tiempo real.
 - El volumen `-v /app/node_modules` evita que los módulos del contenedor sean sobreescritos por los del host.
 
 ## 🔌 Endpoints consumidos en esta primera iteración
