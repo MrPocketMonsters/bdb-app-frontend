@@ -1,54 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import ListEntryCard from '@/components/ListEntryCard';
 import { NAVIGATION_PATHS } from '@/constants/navigation';
+import { getModuleList, PaginatedModulesResponse } from '@/services/moduleService';
 
-const modules = [
-  {
-    id: 'cloud',
-    title: 'Cloud Computing',
-    image: 'images/modules/cloud.jpg',
-    description:
-      'Aprende a desplegar y gestionar aplicaciones en la nube: provisionamiento de recursos, diseño de arquitecturas escalables, costos y seguridad. Incluye hands-on con servicios populares y despliegues reales.',
-  },
-  {
-    id: 'backend',
-    title: 'Backend y APIs',
-    image: 'images/modules/backend.jpg',
-    description:
-      'Construye APIs robustas y seguras, modela bases de datos, optimiza consultas y diseña esquemas escalables. Incluye autenticación, autorización y prácticas de testing y observabilidad.',
-  },
-  {
-    id: 'frontend',
-    title: 'Frontend Interactivo',
-    image: 'images/modules/frontend.jpg',
-    description:
-      'Desarrolla interfaces modernas con enfoque en accesibilidad, rendimiento y experiencia de usuario. Trabaja con componentes, gestión de estado y optimización para dispositivos móviles y desktop.',
-  },
-  {
-    id: 'devops',
-    title: 'DevOps y CI/CD',
-    image: 'images/modules/devops.jpg',
-    description:
-      'Automatiza pipelines, integra pruebas, despliegues y monitorización. Aprende a usar herramientas de CI/CD, infra como código y prácticas de entrega continua en entornos reales.',
-  },
-  {
-    id: 'data',
-    title: 'Data & Analytics',
-    image: 'images/modules/data.jpg',
-    description:
-      'Fundamentos de ingeniería de datos y análisis: ingestión, almacenamiento, limpieza y visualización. Cubre casos de uso para la toma de decisiones y métricas de producto.',
-  },
-  {
-    id: 'security',
-    title: 'Seguridad y Buenas Prácticas',
-    image: 'images/modules/security.jpg',
-    description:
-      'Conceptos esenciales de seguridad: gestión de secretos, cifrado, hardening de aplicaciones y pruebas de penetración básicas. Buenas prácticas para proteger tus proyectos en producción.',
-  },
-];
+interface Module {
+  id: number;
+  name: string;
+}
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+  const [modules, setModules] = useState<Module[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        // Fetch first page with 20 items
+        const response: PaginatedModulesResponse = await getModuleList(0, 20);
+        setModules(response.content);
+        setLoading(false);
+      } catch (err: any) {
+        console.error('Error fetching modules:', err);
+        setError(err.message || 'Error al cargar los módulos');
+        setLoading(false);
+      }
+    };
+
+    fetchModules();
+  }, []);
 
   return (
     <>
@@ -124,19 +106,35 @@ const Home: React.FC = () => {
         </div>
 
         <section id="modules" className="space-y-5">
-          {modules.map((m) => (
-            <ListEntryCard
-              key={m.id}
-              id={m.id}
-              title={m.title}
-              image={m.image}
-              description={m.description}
-              onClick={(id) => {
-                // scroll to module anchor
-                window.location.hash = `#${id}`;
-              }}
-            />
-          ))}
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+            </div>
+          ) : error ? (
+            <div className="bg-red-500/20 backdrop-blur-sm border border-red-500/50 rounded-lg p-6 text-center">
+              <p className="text-white text-lg font-semibold mb-2">
+                Error al cargar los módulos
+              </p>
+              <p className="text-white/80">{error}</p>
+            </div>
+          ) : modules.length === 0 ? (
+            <div className="bg-blue-500/20 backdrop-blur-sm border border-blue-500/50 rounded-lg p-6 text-center">
+              <p className="text-white text-lg">
+                No hay módulos disponibles en este momento.
+              </p>
+            </div>
+          ) : (
+            modules.map((m) => (
+              <ListEntryCard
+                key={m.id}
+                id={String(m.id)}
+                title={m.name}
+                onClick={(id) => {
+                  navigate(`${NAVIGATION_PATHS.MODULE_DETAILS_PATH}/${id}`);
+                }}
+              />
+            ))
+          )}
         </section>
       </section>
     </>

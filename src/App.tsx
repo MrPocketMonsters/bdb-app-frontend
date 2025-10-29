@@ -9,6 +9,7 @@ import Login from './views/Auth/Login';
 import Logout from './views/Auth/Logout';
 import Register from './views/Auth/Register';
 import Profile from './views/User/Profile';
+import ModuleDetails from './views/Module/ModuleDetails';
 
 function App() {
   const { theme } = useTheme();
@@ -31,6 +32,7 @@ function App() {
           <Route path={NAVIGATION_PATHS.LOGOUT_PATH} element={<Logout />} />
           <Route path={NAVIGATION_PATHS.REGISTER_PATH} element={<Register />} />
           <Route path={`${NAVIGATION_PATHS.PROFILE_PATH}/:id`} element={<Profile />} />
+          <Route path={`${NAVIGATION_PATHS.MODULE_DETAILS_PATH}/:id`} element={<ModuleDetails />} />
         </Route>
       </Routes>
     </>
