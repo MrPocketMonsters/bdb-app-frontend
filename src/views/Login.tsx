@@ -1,16 +1,17 @@
 import React, { useState , useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { isLoggedIn } from '../services/authService';
 import { login } from "@/services/authService";
+import RedirectTimer from "@/components/RedirectTimer";
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
+  const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn()) {
-      navigate('/');
+      setIsAlreadyLoggedIn(true);
     }
-  }, [navigate]);
+  }, []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,12 +24,17 @@ const Login: React.FC = () => {
 
     try {
       await login(email, password);
-      navigate('/');
+      setIsAlreadyLoggedIn(true);
     } catch (error: any) {
       setError(`Error: ${error.message}`);
       console.error("Error de solicitud:", error);
     }
   };
+
+  // Show redirect message if already logged in
+  if (isAlreadyLoggedIn) {
+    return <RedirectTimer message="Ya has iniciado sesión. Serás redirigido en" redirectTo="/" />;
+  }
 
   return (
     <div className="flex items-center justify-center py-12 px-6">
